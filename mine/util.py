@@ -68,27 +68,18 @@ def find_library(possible_lib_names, search_symbol, library_name,
     if type(possible_lib_names) not in (list, tuple):
         possible_lib_names = [possible_lib_names]
 
-    f = open("/var/ss.test.log", "w+")
     lib_names = []
     for lib_name in possible_lib_names:
-        f.write(str(lib_name))
-        f.write('\n')
         lib_names.append(lib_name)
         #lib_names.append('lib' + lib_name)
-    f.write(str(lib_names))
-    f.write('\n')
-    f.close()
 
-    f = open("/var/ss.test1.log", "w+")
     for name in lib_names:
-        f.write(str(name) + '\n')
         if os.name == "nt":
             paths.extend(find_library_nt(name))
         else:
             path = ctypes.util.find_library(name)
             if path:
                 paths.append(path)
-    f.close()
 
     if not paths:
         # We may get here when find_library fails because, for example,
